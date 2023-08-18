@@ -43,6 +43,7 @@ public class CNAPSConfiguration {
         return new Flyway(
                 Flyway.configure()
                         .baselineOnMigrate(true)
+                        .locations("classpath:/db/migration/postgres2")
                         .dataSource(
                                 env.getRequiredProperty("spring.second-datasource.url"),
                                 env.getRequiredProperty("spring.second-datasource.username"),
@@ -75,7 +76,7 @@ public class CNAPSConfiguration {
 
     @Bean(name = "postgres2EntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean postgres2EntityManagerFactory(
-            final EntityManagerFactoryBuilder builder,
+            @Qualifier("postgres2EntityManagerFactoryBuilder") final EntityManagerFactoryBuilder builder,
             @Qualifier("postgres2Datasource") final DataSource dataSource
     ) {
         return builder

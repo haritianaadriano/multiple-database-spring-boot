@@ -4,6 +4,7 @@ import com.example.prog4.repository.postgres1.entity.Phone;
 import com.example.prog4.repository.postgres1.entity.Position;
 import com.example.prog4.repository.postgres1.entity.enums.Csp;
 import com.example.prog4.repository.postgres1.entity.enums.Sex;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,8 +42,10 @@ public class CNAPSEmployee {
     private String personalEmail;
     private String professionalEmail;
     private String registrationNumber;
+    @Column(name = "birth_date")
     private LocalDate birthDate;
     private LocalDate entranceDate;
     private LocalDate departureDate;
+    @Column(name = "children_number")
     private Integer childrenNumber;
 }

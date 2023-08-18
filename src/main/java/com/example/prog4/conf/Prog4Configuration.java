@@ -16,10 +16,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
@@ -38,6 +41,7 @@ public class Prog4Configuration {
         return new Flyway(
                 Flyway.configure()
                 .baselineOnMigrate(true)
+                .locations("classpath:/db/migration/postgres1")
                 .dataSource(
                         env.getRequiredProperty("spring.datasource.url"),
                         env.getRequiredProperty("spring.datasource.username"),
@@ -52,10 +56,26 @@ public class Prog4Configuration {
         return DataSourceBuilder.create().build();
     }
 
+    @Bean(name = "postgres1EntityManagerFactoryBuilder")
+    public EntityManagerFactoryBuilder postgres1EntityManagerFactoryBuilder(
+            @Qualifier("postgres1Datasource") DataSource dataSource
+    ) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("javax.persistence.jdbc.url", env.getRequiredProperty("spring.datasource.url"));
+        properties.put("javax.persistence.jdbc.user", env.getRequiredProperty("spring.datasource.username"));
+        properties.put("javax.persistence.jdbc.password", env.getRequiredProperty("spring.datasource.password"));
+
+        return new EntityManagerFactoryBuilder(
+                new HibernateJpaVendorAdapter(),
+                properties,
+                null
+        );
+    }
+
     @Primary
     @Bean(name = "postgres1EntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean postgres1EntityManagerFactory(
-            final EntityManagerFactoryBuilder builder,
+            @Qualifier("postgres1EntityManagerFactoryBuilder") final EntityManagerFactoryBuilder builder,
             @Qualifier("postgres1Datasource") final DataSource dataSource
             ) {
         return  builder
