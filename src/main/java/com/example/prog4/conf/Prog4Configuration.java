@@ -84,6 +84,10 @@ public class Prog4Configuration {
                 .build();
     }
 
+    // Added this Primary annotation here and the employee creation worked fine
+    // But for some reason beyond my understanding, this error occurs when I try to go to /employee/show/employee_id
+    // 500 failed to lazily initialize a collection of role: com.example.prog4.repository.postgres1.entity.Employee.phones: could not initialize proxy - no Session
+    @Primary
     @Bean(name = "postgres1TransactionManager")
     public PlatformTransactionManager postgres1PlatformTransactionManager(
             @Qualifier("postgres1EntityManagerFactory") final EntityManagerFactory postgres1EntityManagerFactory
