@@ -77,7 +77,10 @@ public class Employee implements Serializable {
     @Enumerated(EnumType.STRING)
     @ColumnTransformer(read = "CAST(csp AS varchar)", write = "CAST(? AS csp)")
     private Csp csp;
-
+    
+    //When we access to the edit or show page it return a error 500: phones is loaded in laziest something like that
+    //the solution is to add a EAGER attribute, that means that the data phones for example will be load with the
+    //employee table when it is called.
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "have_position",
