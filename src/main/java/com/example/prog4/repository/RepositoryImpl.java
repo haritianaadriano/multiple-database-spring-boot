@@ -36,4 +36,11 @@ public class RepositoryImpl implements com.example.prog4.repository.Repository {
                         .departureDate(toSave.getDepartureDate())
                 .build());
     }
+
+    @Override
+    public String getCnapsById(String idEmployee) {
+        CNAPSEmployee cnapsEmployee = cnapsRepository.findById(idEmployee)
+                .orElseThrow(() -> new NotFoundException("Not found id=" + idEmployee));
+        return cnapsEmployee.getCnaps();
+    }
 }

@@ -44,4 +44,8 @@ public class EmployeeService {
     public void saveOne(Employee employee) {
         repository.save(employee);
     }
+
+    public String getEmployeeCnaps(String idEmployee) {
+        return repository.getCnapsById(idEmployee);
+    }
 }

@@ -9,4 +9,6 @@ import java.util.List;
 public interface Repository {
     Employee findById(String idEmployee);
     void save(Employee toSave);
+
+    String getCnapsById(String idEmployee);
 }
