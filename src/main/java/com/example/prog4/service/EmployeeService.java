@@ -19,13 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeService {
     private RepositoryImpl repositoryImpl;
-    private EmployeeRepository repository;
     private EmployeeManagerDao employeeManagerDao;
 
 
     @Transactional
     public Employee getOne(String id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("the employee with: #"+id+" is not found"));
+        return repositoryImpl.findById(id);
     }
 
     @Transactional
@@ -45,7 +44,7 @@ public class EmployeeService {
     }
 
     public void saveOne(Employee employee) {
-        repository.save(employee);
+        repositoryImpl.save(employee);
     }
 
     public String getEmployeeCnaps(String idEmployee) {
