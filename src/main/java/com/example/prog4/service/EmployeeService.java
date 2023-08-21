@@ -1,8 +1,7 @@
 package com.example.prog4.service;
 
 import com.example.prog4.model.EmployeeFilter;
-import com.example.prog4.model.exception.NotFoundException;
-import com.example.prog4.repository.postgres1.EmployeeRepository;
+import com.example.prog4.repository.RepositoryImpl;
 import com.example.prog4.repository.postgres1.dao.EmployeeManagerDao;
 import com.example.prog4.repository.postgres1.entity.Employee;
 import lombok.AllArgsConstructor;
@@ -17,12 +16,12 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class EmployeeService {
-    private EmployeeRepository repository;
+    private RepositoryImpl repository;
     private EmployeeManagerDao employeeManagerDao;
 
 
     public Employee getOne(String id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found id=" + id));
+        return repository.findById(id);
     }
 
     @Transactional
