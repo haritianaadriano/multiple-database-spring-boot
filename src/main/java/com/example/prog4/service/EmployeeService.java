@@ -1,9 +1,7 @@
 package com.example.prog4.service;
 
 import com.example.prog4.model.EmployeeFilter;
-import com.example.prog4.model.exception.NotFoundException;
 import com.example.prog4.repository.RepositoryImpl;
-import com.example.prog4.repository.postgres1.EmployeeRepository;
 import com.example.prog4.repository.postgres1.dao.EmployeeManagerDao;
 import com.example.prog4.repository.postgres1.entity.Employee;
 import lombok.AllArgsConstructor;
