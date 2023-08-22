@@ -16,12 +16,13 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class EmployeeService {
-    private RepositoryImpl repository;
+    private RepositoryImpl repositoryImpl;
     private EmployeeManagerDao employeeManagerDao;
 
 
+    @Transactional
     public Employee getOne(String id) {
-        return repository.findById(id);
+        return repositoryImpl.findById(id);
     }
 
     @Transactional
@@ -41,10 +42,10 @@ public class EmployeeService {
     }
 
     public void saveOne(Employee employee) {
-        repository.save(employee);
+        repositoryImpl.save(employee);
     }
 
     public String getEmployeeCnaps(String idEmployee) {
-        return repository.getCnapsById(idEmployee);
+        return repositoryImpl.getCnapsById(idEmployee);
     }
 }

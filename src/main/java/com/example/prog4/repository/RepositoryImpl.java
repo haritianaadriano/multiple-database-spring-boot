@@ -6,8 +6,12 @@ import com.example.prog4.repository.postgres1.entity.Employee;
 import com.example.prog4.repository.postgres2.CNAPSRepository;
 import com.example.prog4.repository.postgres2.entity.CNAPSEmployee;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+@Primary
+@Slf4j
 @Repository
 @AllArgsConstructor
 public class RepositoryImpl implements com.example.prog4.repository.Repository {

@@ -39,6 +39,9 @@ public class CNAPSEmployee {
     private String cnaps;
     private String image;
     private String address;
+
+    //TODO: foreach attribute with a camelcase change to snakecase because the hibernate cannot map
+    //automatically after our configuration like i did it in the employee entity
     private String lastName;
     private String firstName;
     private String personalEmail;
