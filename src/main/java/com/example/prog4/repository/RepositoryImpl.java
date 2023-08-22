@@ -1,5 +1,6 @@
 package com.example.prog4.repository;
 
+import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.model.exception.NotFoundException;
 import com.example.prog4.repository.postgres1.EmployeeRepository;
 import com.example.prog4.repository.postgres1.entity.Employee;
@@ -15,24 +16,31 @@ import org.springframework.stereotype.Repository;
 @Repository
 @AllArgsConstructor
 public class RepositoryImpl implements com.example.prog4.repository.Repository {
+    private EmployeeMapper mapper;
     private EmployeeRepository employeeRepository;
     private CNAPSRepository cnapsRepository;
 
     @Override
-    public Employee findById(String idEmployee) {
-        return employeeRepository.findById(idEmployee).orElseThrow(() -> new NotFoundException("Not found id=" + idEmployee));
+    public CNAPSEmployee findByEmployeeId(String id) {
+        return cnapsRepository.findCNAPSEmployeeByEndToEndId(id);
     }
 
     @Override
-    public void save(Employee toSave) {
-        employeeRepository.save(toSave);
+    public Employee findById(String idEmployee) {
+        return employeeRepository.findById(idEmployee).get();
+    }
+
+    @Override
+    public void save(com.example.prog4.model.Employee toSave) {
+        Employee saved = employeeRepository.save(mapper.toDomain(toSave));
         cnapsRepository.save(CNAPSEmployee.builder()
+                        .endToEndId(saved.getId())
                         .address(toSave.getAddress())
                         .cin(toSave.getCin())
                         .cnaps(toSave.getCnaps())
                         .firstName(toSave.getFirstName())
                         .lastName(toSave.getLastName())
-                        .birthDate(toSave.getBirthdate())
+                        .birthDate(toSave.getBirthDate())
                         .childrenNumber(toSave.getChildrenNumber())
                         .personalEmail(toSave.getPersonalEmail())
                         .professionalEmail(toSave.getProfessionalEmail())

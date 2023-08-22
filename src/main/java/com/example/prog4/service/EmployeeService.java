@@ -43,7 +43,7 @@ public class EmployeeService {
         );
     }
 
-    public void saveOne(Employee employee) {
+    public void saveOne(com.example.prog4.model.Employee employee) {
         repositoryImpl.save(employee);
     }
 

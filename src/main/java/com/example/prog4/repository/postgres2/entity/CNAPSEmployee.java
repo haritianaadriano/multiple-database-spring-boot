@@ -37,19 +37,28 @@ public class CNAPSEmployee {
     private String id;
     private String cin;
     private String cnaps;
+    @Column(name = "end_to_end_id")
+    private String endToEndId;
     private String image;
     private String address;
 
     //TODO: foreach attribute with a camelcase change to snakecase because the hibernate cannot map
     //automatically after our configuration like i did it in the employee entity
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "personal_email")
     private String personalEmail;
+    @Column(name = "professional_email")
     private String professionalEmail;
+    @Column(name = "registration_number")
     private String registrationNumber;
     @Column(name = "birth_date")
     private LocalDate birthDate;
+    @Column(name = "entrance_date")
     private LocalDate entranceDate;
+    @Column(name = "departure_date")
     private LocalDate departureDate;
     @Column(name = "children_number")
     private Integer childrenNumber;
