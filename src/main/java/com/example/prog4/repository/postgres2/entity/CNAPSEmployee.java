@@ -22,6 +22,8 @@ public class CNAPSEmployee {
     private String id;
     private String cin;
     private String cnaps;
+    @Column(name = "end_to_end_id")
+    private String endToEndId;
     private String image;
     private String address;
 
