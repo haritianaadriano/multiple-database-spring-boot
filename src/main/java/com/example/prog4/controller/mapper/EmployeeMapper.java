@@ -7,6 +7,7 @@ import com.example.prog4.repository.postgres1.PositionRepository;
 import com.example.prog4.repository.postgres1.entity.Phone;
 import com.example.prog4.repository.postgres1.entity.Position;
 import com.example.prog4.repository.postgres2.CNAPSRepository;
+import com.example.prog4.service.AgeUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -75,6 +76,7 @@ public class EmployeeMapper {
 
     public Employee toView(com.example.prog4.repository.postgres1.entity.Employee employee) {
         return Employee.builder()
+                .age(AgeUtils.howOldAmI(employee.getBirthdate()))
                 .id(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())

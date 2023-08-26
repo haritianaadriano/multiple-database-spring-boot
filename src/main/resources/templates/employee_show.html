@@ -49,6 +49,11 @@
         <p id="childrenNumber" type="number" th:text="*{employee.childrenNumber}"
            class="form-control show-fields"></p>
     </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <label for="age" class="form-label text-black-50">Age</label>
+        <p id="age" type="number" th:text="*{employee.age}"
+           class="form-control show-fields"></p>
+    </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
         <label for="birthDate" class="form-label text-black-50">Birthdate</label>
@@ -84,6 +89,11 @@
             <p th:text="${position.name}" class="form-control show-fields"></p>
         </div>
     </div>
+</div>
+<div>
+    <a th:href="'/employee/'+${employee.id}+'/raw/pdf'">
+        <button class="btn btn-primary">print</button>
+    </a>
 </div>
 
 <footer th:replace="~{components/navbar.html :: footer}"></footer>

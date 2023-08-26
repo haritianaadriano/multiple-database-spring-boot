@@ -19,6 +19,8 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 public class Employee implements Serializable {
+    private Integer age;
+    private Integer salary;
     private String id;
     private String firstName;
     private String lastName;
