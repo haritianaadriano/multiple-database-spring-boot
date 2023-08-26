@@ -61,6 +61,7 @@ public class EmployeeMapper {
                     // lists
                     .phones(phones)
                     .positions(positions)
+                    .salary(employee.getSalary())
                     .build();
             MultipartFile imageFile = employee.getImage();
             if (imageFile != null && !imageFile.isEmpty()) {
@@ -99,6 +100,7 @@ public class EmployeeMapper {
                 // lists
                 .phones(employee.getPhones().stream().map(phoneMapper::toView).toList())
                 .positions(employee.getPositions())
+                .salary(employee.getSalary())
                 .build();
     }
 }
