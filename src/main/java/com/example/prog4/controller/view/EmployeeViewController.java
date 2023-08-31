@@ -28,10 +28,9 @@ public class EmployeeViewController extends PopulateController {
     public String getAll(
             @ModelAttribute EmployeeFilter filters,
             Model model,
-            HttpSession session,
-            @RequestParam(name = "params", defaultValue = "BIRTHDAY")BirthdayEnum enums
+            HttpSession session
             ) {
-        model.addAttribute("employees", employeeService.getAll(filters).stream().map(employee -> employeeMapper.toView(employee, enums)).toList())
+        model.addAttribute("employees", employeeService.getAll(filters).stream().map(employee -> employeeMapper.toView(employee)).toList())
                 .addAttribute("employeeFilters", filters)
                 .addAttribute("directions", Sort.Direction.values());
         session.setAttribute("employeeFiltersSession", filters);
