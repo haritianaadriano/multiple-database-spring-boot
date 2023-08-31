@@ -4,6 +4,7 @@ import com.example.prog4.controller.PopulateController;
 import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.EmployeeFilter;
+import com.example.prog4.model.enums.BirthdayEnum;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/employee")
@@ -26,9 +28,10 @@ public class EmployeeViewController extends PopulateController {
     public String getAll(
             @ModelAttribute EmployeeFilter filters,
             Model model,
-            HttpSession session
-    ) {
-        model.addAttribute("employees", employeeService.getAll(filters).stream().map(employeeMapper::toView).toList())
+            HttpSession session,
+            @RequestParam(name = "params", defaultValue = "BIRTHDAY")BirthdayEnum enums
+            ) {
+        model.addAttribute("employees", employeeService.getAll(filters).stream().map(employee -> employeeMapper.toView(employee, enums)).toList())
                 .addAttribute("employeeFilters", filters)
                 .addAttribute("directions", Sort.Direction.values());
         session.setAttribute("employeeFiltersSession", filters);
@@ -43,8 +46,8 @@ public class EmployeeViewController extends PopulateController {
     }
 
     @GetMapping("/edit/{eId}")
-    public String editEmployee(@PathVariable String eId, Model model) {
-        Employee toEdit = employeeMapper.toView(employeeService.getOne(eId));
+    public String editEmployee(@PathVariable String eId, Model model, @RequestParam(name = "params", defaultValue = "BIRTHDAY")BirthdayEnum enums) {
+        Employee toEdit = employeeMapper.toPDF(employeeService.getOne(eId), enums);
         model.addAttribute("employee", toEdit);
 
         return "employee_edition";

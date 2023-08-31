@@ -4,6 +4,7 @@ import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.controller.validator.EmployeeValidator;
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.EmployeeFilter;
+import com.example.prog4.model.enums.BirthdayEnum;
 import com.example.prog4.service.CSVUtils;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,9 +31,11 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/list/csv")
-    public ResponseEntity<byte[]> getCsv(HttpSession session) {
+    public ResponseEntity<byte[]> getCsv(
+            HttpSession session
+            ) {
         EmployeeFilter filters = (EmployeeFilter) session.getAttribute("employeeFiltersSession");
-        List<Employee> data = employeeService.getAll(filters).stream().map(employeeMapper::toView).toList();
+        List<Employee> data = employeeService.getAll(filters).stream().map(employee -> employeeMapper.toView(employee)).toList();
 
         String csv = CSVUtils.convertToCSV(data);
         byte[] bytes = csv.getBytes();

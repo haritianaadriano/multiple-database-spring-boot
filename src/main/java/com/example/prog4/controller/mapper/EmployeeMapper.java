@@ -1,6 +1,7 @@
 package com.example.prog4.controller.mapper;
 
 import com.example.prog4.model.Employee;
+import com.example.prog4.model.enums.BirthdayEnum;
 import com.example.prog4.model.exception.BadRequestException;
 import com.example.prog4.repository.RepositoryImpl;
 import com.example.prog4.repository.postgres1.PositionRepository;
@@ -103,4 +104,33 @@ public class EmployeeMapper {
                 .salary(employee.getSalary())
                 .build();
     }
+    public Employee toPDF(com.example.prog4.repository.postgres1.entity.Employee employee, BirthdayEnum enums) {
+        return Employee.builder()
+                .age(AgeUtils.howOldAmIForPDF(employee.getBirthdate(), enums))
+                .id(employee.getId())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
+                .address(employee.getAddress())
+                .cin(employee.getCin())
+                .cnaps(repository.findCNAPSEmployeeByEndToEndId(employee.getId()).getCnaps())
+                .registrationNumber(employee.getRegistrationNumber())
+                .childrenNumber(employee.getChildrenNumber())
+                // enums
+                .csp(employee.getCsp())
+                .sex(employee.getSex())
+                .stringImage(employee.getImage())
+                // emails
+                .professionalEmail(employee.getProfessionalEmail())
+                .personalEmail(employee.getPersonalEmail())
+                // dates
+                .birthDate(employee.getBirthdate())
+                .departureDate(employee.getDepartureDate())
+                .entranceDate(employee.getEntranceDate())
+                // lists
+                .phones(employee.getPhones().stream().map(phoneMapper::toView).toList())
+                .positions(employee.getPositions())
+                .salary(employee.getSalary())
+                .build();
+    }
+
 }
